@@ -1,0 +1,126 @@
+Logging************pruning 90 of the network****************
+Layer-wise pruning = False
+Autoencoder layer-wise pruning percentages
+encoder.0.weight : 541 / 1152  0.4696180555555556
+encoder.0.bias : 61 / 128  0.4765625
+encoder.2.weight : 128219 / 131072  0.9782333374023438
+encoder.2.bias : 62 / 64  0.96875
+encoder.4.weight : 7244 / 8192  0.88427734375
+encoder.4.bias : 26 / 32  0.8125
+encoder.6.weight : 3349 / 4608  0.7267795138888888
+encoder.6.bias : 13 / 16  0.8125
+encoder.9.weight : 841 / 1152  0.7300347222222222
+encoder.9.bias : 5 / 8  0.625
+decoder.0.weight : 7368 / 9216  0.7994791666666666
+decoder.0.bias : 81 / 128  0.6328125
+decoder.2.weight : 25696 / 32768  0.7841796875
+decoder.2.bias : 15 / 64  0.234375
+decoder.4.weight : 6016 / 8192  0.734375
+decoder.4.bias : 9 / 32  0.28125
+decoder.6.weight : 9170 / 12800  0.71640625
+decoder.6.bias : 8 / 16  0.5
+decoder.8.weight : 9 / 64  0.140625
+decoder.8.bias : 1 / 1  1.0
+Fraction of weights pruned = 188734/209705 = 0.8999976156982428
+Number of parameters in model 209705
+Loading saved autoencoder named ./mnist/before_train.pth
+epoch [1/100], loss:0.1614
+epoch [2/100], loss:0.1109
+epoch [3/100], loss:0.0833
+epoch [4/100], loss:0.0758
+epoch [5/100], loss:0.0745
+epoch [6/100], loss:0.0704
+epoch [7/100], loss:0.0579
+epoch [8/100], loss:0.0609
+epoch [9/100], loss:0.0592
+epoch [10/100], loss:0.0520
+epoch [11/100], loss:0.0500
+epoch [12/100], loss:0.0538
+epoch [13/100], loss:0.0471
+epoch [14/100], loss:0.0476
+epoch [15/100], loss:0.0472
+epoch [16/100], loss:0.0455
+epoch [17/100], loss:0.0447
+epoch [18/100], loss:0.0403
+epoch [19/100], loss:0.0441
+epoch [20/100], loss:0.0412
+epoch [21/100], loss:0.0464
+epoch [22/100], loss:0.0377
+epoch [23/100], loss:0.0417
+epoch [24/100], loss:0.0381
+epoch [25/100], loss:0.0396
+epoch [26/100], loss:0.0365
+epoch [27/100], loss:0.0377
+epoch [28/100], loss:0.0350
+epoch [29/100], loss:0.0361
+epoch [30/100], loss:0.0342
+epoch [31/100], loss:0.0375
+epoch [32/100], loss:0.0373
+epoch [33/100], loss:0.0344
+epoch [34/100], loss:0.0379
+epoch [35/100], loss:0.0337
+epoch [36/100], loss:0.0362
+epoch [37/100], loss:0.0344
+epoch [38/100], loss:0.0347
+epoch [39/100], loss:0.0324
+epoch [40/100], loss:0.0335
+epoch [41/100], loss:0.0329
+epoch [42/100], loss:0.0343
+epoch [43/100], loss:0.0340
+epoch [44/100], loss:0.0357
+epoch [45/100], loss:0.0347
+epoch [46/100], loss:0.0358
+epoch [47/100], loss:0.0308
+epoch [48/100], loss:0.0336
+epoch [49/100], loss:0.0337
+epoch [50/100], loss:0.0355
+epoch [51/100], loss:0.0289
+epoch [52/100], loss:0.0301
+epoch [53/100], loss:0.0324
+epoch [54/100], loss:0.0310
+epoch [55/100], loss:0.0326
+epoch [56/100], loss:0.0330
+epoch [57/100], loss:0.0312
+epoch [58/100], loss:0.0259
+epoch [59/100], loss:0.0315
+epoch [60/100], loss:0.0280
+epoch [61/100], loss:0.0288
+epoch [62/100], loss:0.0268
+epoch [63/100], loss:0.0307
+epoch [64/100], loss:0.0298
+epoch [65/100], loss:0.0300
+epoch [66/100], loss:0.0315
+epoch [67/100], loss:0.0309
+epoch [68/100], loss:0.0304
+epoch [69/100], loss:0.0264
+epoch [70/100], loss:0.0285
+epoch [71/100], loss:0.0300
+epoch [72/100], loss:0.0284
+epoch [73/100], loss:0.0287
+epoch [74/100], loss:0.0275
+epoch [75/100], loss:0.0305
+epoch [76/100], loss:0.0269
+epoch [77/100], loss:0.0300
+epoch [78/100], loss:0.0261
+epoch [79/100], loss:0.0275
+epoch [80/100], loss:0.0269
+epoch [81/100], loss:0.0282
+epoch [82/100], loss:0.0261
+epoch [83/100], loss:0.0262
+epoch [84/100], loss:0.0253
+epoch [85/100], loss:0.0238
+epoch [86/100], loss:0.0285
+epoch [87/100], loss:0.0268
+epoch [88/100], loss:0.0248
+epoch [89/100], loss:0.0265
+epoch [90/100], loss:0.0266
+epoch [91/100], loss:0.0265
+epoch [92/100], loss:0.0258
+epoch [93/100], loss:0.0272
+epoch [94/100], loss:0.0277
+epoch [95/100], loss:0.0265
+epoch [96/100], loss:0.0280
+epoch [97/100], loss:0.0275
+epoch [98/100], loss:0.0274
+epoch [99/100], loss:0.0256
+epoch [100/100], loss:0.0282

@@ -1,0 +1,15 @@
+LoggingNumber of parameters in model 209705
+Saving autoencoder as ./mnist/before_train.pth
+epoch [1/100], loss:0.3786
+epoch [2/100], loss:0.2233
+epoch [3/100], loss:0.1814
+epoch [4/100], loss:0.1739
+epoch [5/100], loss:0.1655
+epoch [6/100], loss:0.1595
+epoch [7/100], loss:0.1662
+epoch [8/100], loss:0.1516
+epoch [9/100], loss:0.1610
+epoch [10/100], loss:0.1632
+epoch [11/100], loss:0.1490
+epoch [12/100], loss:0.1499
+epoch [13/100], loss:0.1484

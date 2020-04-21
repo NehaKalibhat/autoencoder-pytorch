@@ -1,0 +1,125 @@
+Logging************pruning 96 of the network****************
+Layer-wise pruning = False
+Autoencoder layer-wise pruning percentages
+encoder.0.weight : 734 / 1152  0.6371527777777778
+encoder.0.bias : 73 / 128  0.5703125
+encoder.2.weight : 130683 / 131072  0.9970321655273438
+encoder.2.bias : 64 / 64  1.0
+encoder.4.weight : 7635 / 8192  0.9320068359375
+encoder.4.bias : 30 / 32  0.9375
+encoder.6.weight : 3977 / 4608  0.8630642361111112
+encoder.6.bias : 16 / 16  1.0
+encoder.9.weight : 1009 / 1152  0.8758680555555556
+encoder.9.bias : 7 / 8  0.875
+decoder.0.weight : 8269 / 9216  0.8972439236111112
+decoder.0.bias : 104 / 128  0.8125
+decoder.2.weight : 30198 / 32768  0.92156982421875
+decoder.2.bias : 22 / 64  0.34375
+decoder.4.weight : 6981 / 8192  0.8521728515625
+decoder.4.bias : 11 / 32  0.34375
+decoder.6.weight : 11480 / 12800  0.896875
+decoder.6.bias : 10 / 16  0.625
+decoder.8.weight : 12 / 64  0.1875
+decoder.8.bias : 1 / 1  1.0
+Fraction of weights pruned = 201316/209705 = 0.9599961851171884
+Number of parameters in model 209705
+epoch [1/100], loss:0.1667
+epoch [2/100], loss:0.1190
+epoch [3/100], loss:0.1071
+epoch [4/100], loss:0.1065
+epoch [5/100], loss:0.1021
+epoch [6/100], loss:0.0918
+epoch [7/100], loss:0.0907
+epoch [8/100], loss:0.0778
+epoch [9/100], loss:0.0762
+epoch [10/100], loss:0.0668
+epoch [11/100], loss:0.0744
+epoch [12/100], loss:0.0686
+epoch [13/100], loss:0.0746
+epoch [14/100], loss:0.0672
+epoch [15/100], loss:0.0670
+epoch [16/100], loss:0.0671
+epoch [17/100], loss:0.0645
+epoch [18/100], loss:0.0702
+epoch [19/100], loss:0.0666
+epoch [20/100], loss:0.0588
+epoch [21/100], loss:0.0622
+epoch [22/100], loss:0.0625
+epoch [23/100], loss:0.0599
+epoch [24/100], loss:0.0620
+epoch [25/100], loss:0.0638
+epoch [26/100], loss:0.0581
+epoch [27/100], loss:0.0584
+epoch [28/100], loss:0.0565
+epoch [29/100], loss:0.0588
+epoch [30/100], loss:0.0573
+epoch [31/100], loss:0.0520
+epoch [32/100], loss:0.0593
+epoch [33/100], loss:0.0539
+epoch [34/100], loss:0.0596
+epoch [35/100], loss:0.0561
+epoch [36/100], loss:0.0526
+epoch [37/100], loss:0.0527
+epoch [38/100], loss:0.0541
+epoch [39/100], loss:0.0547
+epoch [40/100], loss:0.0551
+epoch [41/100], loss:0.0500
+epoch [42/100], loss:0.0510
+epoch [43/100], loss:0.0518
+epoch [44/100], loss:0.0490
+epoch [45/100], loss:0.0530
+epoch [46/100], loss:0.0498
+epoch [47/100], loss:0.0506
+epoch [48/100], loss:0.0517
+epoch [49/100], loss:0.0504
+epoch [50/100], loss:0.0494
+epoch [51/100], loss:0.0521
+epoch [52/100], loss:0.0498
+epoch [53/100], loss:0.0490
+epoch [54/100], loss:0.0502
+epoch [55/100], loss:0.0510
+epoch [56/100], loss:0.0509
+epoch [57/100], loss:0.0463
+epoch [58/100], loss:0.0516
+epoch [59/100], loss:0.0471
+epoch [60/100], loss:0.0507
+epoch [61/100], loss:0.0481
+epoch [62/100], loss:0.0490
+epoch [63/100], loss:0.0486
+epoch [64/100], loss:0.0495
+epoch [65/100], loss:0.0489
+epoch [66/100], loss:0.0457
+epoch [67/100], loss:0.0508
+epoch [68/100], loss:0.0491
+epoch [69/100], loss:0.0520
+epoch [70/100], loss:0.0480
+epoch [71/100], loss:0.0470
+epoch [72/100], loss:0.0484
+epoch [73/100], loss:0.0492
+epoch [74/100], loss:0.0469
+epoch [75/100], loss:0.0437
+epoch [76/100], loss:0.0520
+epoch [77/100], loss:0.0463
+epoch [78/100], loss:0.0493
+epoch [79/100], loss:0.0446
+epoch [80/100], loss:0.0437
+epoch [81/100], loss:0.0429
+epoch [82/100], loss:0.0447
+epoch [83/100], loss:0.0476
+epoch [84/100], loss:0.0447
+epoch [85/100], loss:0.0472
+epoch [86/100], loss:0.0501
+epoch [87/100], loss:0.0480
+epoch [88/100], loss:0.0414
+epoch [89/100], loss:0.0472
+epoch [90/100], loss:0.0467
+epoch [91/100], loss:0.0480
+epoch [92/100], loss:0.0473
+epoch [93/100], loss:0.0422
+epoch [94/100], loss:0.0456
+epoch [95/100], loss:0.0448
+epoch [96/100], loss:0.0446
+epoch [97/100], loss:0.0422
+epoch [98/100], loss:0.0479
+epoch [99/100], loss:0.0441
+epoch [100/100], loss:0.0443

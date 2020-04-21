@@ -1,0 +1,25 @@
+Logging************pruning 20.0 of the network****************
+Layer-wise pruning = False
+Autoencoder layer-wise pruning percentages
+encoder.0.weight : 2 / 1152  0.001736111111111111
+encoder.0.bias : 0 / 128  0.0
+encoder.2.weight : 34348 / 131072  0.262054443359375
+encoder.2.bias : 8 / 64  0.125
+encoder.4.weight : 743 / 8192  0.0906982421875
+encoder.4.bias : 0 / 32  0.0
+encoder.6.weight : 159 / 4608  0.034505208333333336
+encoder.6.bias : 1 / 16  0.0625
+encoder.9.weight : 9 / 1152  0.0078125
+encoder.9.bias : 0 / 8  0.0
+decoder.0.weight : 840 / 9216  0.09114583333333333
+decoder.0.bias : 0 / 128  0.0
+decoder.2.weight : 3493 / 32768  0.106597900390625
+decoder.2.bias : 0 / 64  0.0
+decoder.4.weight : 962 / 8192  0.117431640625
+decoder.4.bias : 0 / 32  0.0
+decoder.6.weight : 1372 / 12800  0.1071875
+decoder.6.bias : 0 / 16  0.0
+decoder.8.weight : 4 / 64  0.0625
+decoder.8.bias : 0 / 1  0.0
+Fraction of weights pruned = 41941/209705 = 0.2
+Number of parameters in model 209705
