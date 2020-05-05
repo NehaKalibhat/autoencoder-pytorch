@@ -100,6 +100,7 @@ class autoencoder(nn.Module):
         new_state = {}
         for name in model_state['autoencoder']:
             if ("encoder" in name and prune_encoder) or ("decoder" in name and prune_decoder):
+                self.log(f"loading {name}")
                 new_state[name] = model_state['autoencoder'][name]
             else:
                 new_state[name] = self.state_dict()[name]
@@ -121,9 +122,9 @@ class autoencoder(nn.Module):
             masks = {}
             flat_model_weights = np.array([])
             for name in model:
-                #if "weight" in name:
-                layer_weights = model[name].data.cpu().numpy()
-                flat_model_weights = np.concatenate((flat_model_weights, layer_weights.flatten()))
+                if ("encoder" in name and prune_encoder) or ("decoder" in name and prune_decoder):
+                    layer_weights = model[name].data.cpu().numpy()
+                    flat_model_weights = np.concatenate((flat_model_weights, layer_weights.flatten()))
             global_threshold = np.percentile(abs(flat_model_weights), pruning_perc)
 
             zeros = 0
@@ -135,7 +136,7 @@ class autoencoder(nn.Module):
                     if layer_wise:
                         layer_weights = model[name].data.cpu().numpy()
                         threshold = np.percentile(abs(layer_weights), pruning_perc)
-                    masks[name] = model[name].gt(threshold).int()
+                    masks[name] = model[name].abs().gt(threshold).int()
                     pruned = masks[name].numel() - masks[name].nonzero().size(0)
                     tot = masks[name].numel()
                     frac = pruned / tot
@@ -194,7 +195,7 @@ class autoencoder(nn.Module):
             torch.save(self.state_dict(), path + "/"+ "end_of_" + str(pruning_iter) + '.pth')
             
             sample = self.forward(test_input.cuda())
-            save_image(sample, path + '/image_' + str(pruning_iter) + '.png')
+            save_image(sample * 0.5 + 0.5, path + '/image_' + str(pruning_iter) + '.png')
             torch.cuda.empty_cache()
             
         self.log("Finished Iterative Pruning")
