@@ -6,6 +6,7 @@ from torch import nn
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
 from torchvision import transforms
+import torchvision.datasets as datasets
 from torchvision.datasets import MNIST, CIFAR10
 from torchvision.utils import save_image
 import numpy as np
@@ -13,36 +14,10 @@ import pdb
 import matplotlib.pyplot as plt
 import argparse
 
+learning_rate = 1e-3
 
 class autoencoder(nn.Module):
-    '''
-    def __init__(self):
-        super(autoencoder, self).__init__()
-        # Input size: [batch, 3, 32, 32]
-        # Output size: [batch, 3, 32, 32]
-        self.encoder = nn.Sequential(
-            nn.Conv2d(3, 12, 4, stride=2, padding=1),            # [batch, 12, 16, 16]
-            nn.ReLU(),
-            nn.Conv2d(12, 24, 4, stride=2, padding=1),           # [batch, 24, 8, 8]
-            nn.ReLU(),
-			nn.Conv2d(24, 48, 4, stride=2, padding=1),           # [batch, 48, 4, 4]
-            nn.ReLU(),
-# 			nn.Conv2d(48, 96, 4, stride=2, padding=1),           # [batch, 96, 2, 2]
-#             nn.ReLU(),
-        )
-        self.decoder = nn.Sequential(
-#             nn.ConvTranspose2d(96, 48, 4, stride=2, padding=1),  # [batch, 48, 4, 4]
-#             nn.ReLU(),
-			nn.ConvTranspose2d(48, 24, 4, stride=2, padding=1),  # [batch, 24, 8, 8]
-            nn.ReLU(),
-			nn.ConvTranspose2d(24, 12, 4, stride=2, padding=1),  # [batch, 12, 16, 16]
-            nn.ReLU(),
-            nn.ConvTranspose2d(12, 3, 4, stride=2, padding=1),   # [batch, 3, 32, 32]
-            nn.Sigmoid(),
-        )
-        self.optimizer = torch.optim.Adam(self.parameters(), lr=learning_rate, weight_decay=1e-5)
-    '''
-    def __init__(self):
+    def __init__(self, ndf = 32):
         super(autoencoder, self).__init__()
         self.encoder = nn.Sequential(
             nn.Conv2d(3, ndf, 3, stride=1, padding=1),  # b, 256, 32, 32
@@ -70,6 +45,19 @@ class autoencoder(nn.Module):
             nn.ConvTranspose2d(ndf, 3, 2, stride=2, padding=4),  # b, 1, 32, 32
             nn.Tanh()
         )
+#         self.encoder = nn.Sequential(
+#             nn.Linear(28 * 28, 128),
+#             nn.ReLU(True),
+#             nn.Linear(128, 64),
+#             nn.ReLU(True), nn.Linear(64, 12), nn.ReLU(True), nn.Linear(12, 3))
+#         self.decoder = nn.Sequential(
+#             nn.Linear(3, 12),
+#             nn.ReLU(True),
+#             nn.Linear(12, 64),
+#             nn.ReLU(True),
+#             nn.Linear(64, 128),
+#             nn.ReLU(True), nn.Linear(128, 28 * 28), nn.Tanh())
+        
         self.encoder = self.encoder.cuda()
         self.decoder = self.decoder.cuda()
         self.optimizer = torch.optim.Adam(self.parameters(), lr=learning_rate, weight_decay=1e-5)
@@ -195,6 +183,7 @@ class autoencoder(nn.Module):
             torch.save(self.state_dict(), path + "/"+ "end_of_" + str(pruning_iter) + '.pth')
             
             sample = self.forward(test_input.cuda())
+            sample = sample.view(-1, 1, 28, 28)
             save_image(sample * 0.5 + 0.5, path + '/image_' + str(pruning_iter) + '.png')
             torch.cuda.empty_cache()
             
@@ -221,6 +210,7 @@ class autoencoder(nn.Module):
         for epoch in range(num_epochs):
             for data in dataloader:
                 img, _ = data
+                #img = img.view(img.size(0), -1).cuda()
                 img = img.cuda()
                 # ===================forward=====================
                 output = self.forward(img)
@@ -237,101 +227,107 @@ class autoencoder(nn.Module):
             self.log('epoch [{}/{}], loss:{:.4f}'
                   .format(epoch + 1, num_epochs, loss.data.item()))
             
-            if epoch == num_epochs - 1:
-                #save_image(torch.cat((output, img), 0) * 0.5 + 0.5, './cifar/image_{}.png'.format(epoch))
-                sample = self.forward(test_input.cuda())
-                save_image(sample * 0.5 + 0.5, path + '/image_{}.png'.format(epoch))
+#             if epoch > 0 and (epoch % 20 == 0 or epoch == num_epochs - 1):
+#                 #save_image(torch.cat((output, img), 0) * 0.5 + 0.5, './cifar/image_{}.png'.format(epoch))
+#                 sample = self.forward(test_input.cuda())
+#                 sample = sample.view(-1, 1, 28, 28)
+#                 save_image(sample * 0.5 + 0.5, path + '/image_{}.png'.format(epoch))
         
         torch.save(self.state_dict(), path + '/autoencoder.pth')
         
-        
-parser = argparse.ArgumentParser(description='PyTorch Autoencoder')
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='PyTorch Autoencoder')
 
-parser.add_argument('--num_epochs', default=100, type=int)
-parser.add_argument('--batch_size', default=128, type=int)
-parser.add_argument('--lr', default=1e-3, type=float)
-parser.add_argument('--image_size', default=32, type=int)
-parser.add_argument('--ndf', default=16, type=int)
-parser.add_argument('--dataset', default='../datasets/cifar', type=str)
-parser.add_argument('--inception_cache_path', default='./inception_cache/cifar', type=str)
-parser.add_argument('--log_path', default='./cifar_random_iter_3', type=str)
-parser.add_argument('--init_state', default='./cifar_1/before_train.pth', type=str)
-parser.add_argument('--trained_original_model_state', default='./cifar_1/autoencoder.pth', type=str)
-parser.add_argument('--init_with_old', default='True', type=str)
-parser.add_argument('--prune_encoder', default='True', type=str)
-parser.add_argument('--prune_decoder', default='True', type=str)
-   
-args = parser.parse_args()
+    parser.add_argument('--num_epochs', default=100, type=int)
+    parser.add_argument('--batch_size', default=128, type=int)
+    parser.add_argument('--lr', default=1e-3, type=float)
+    parser.add_argument('--image_size', default=32, type=int)
+    parser.add_argument('--ndf', default=16, type=int)
+    parser.add_argument('--dataset', default='../datasets/cifar', type=str)
+    parser.add_argument('--inception_cache_path', default='./inception_cache/cifar', type=str)
+    parser.add_argument('--log_path', default='./cifar_random_iter_3', type=str)
+    parser.add_argument('--init_state', default='./cifar_1/before_train.pth', type=str)
+    parser.add_argument('--trained_original_model_state', default='./cifar_1/autoencoder.pth', type=str)
+    parser.add_argument('--init_with_old', default='True', type=str)
+    parser.add_argument('--prune_encoder', default='True', type=str)
+    parser.add_argument('--prune_decoder', default='True', type=str)
 
-if args.num_epochs != '':
-     num_epochs = args.num_epochs
-        
-if args.batch_size != '':
-     batch_size = args.batch_size
-        
-if args.lr != '':
-     learning_rate = args.lr
-        
-if args.image_size != '':
-     image_size = args.image_size
-        
-if args.ndf != '':
-     ndf = args.ndf
+    args = parser.parse_args()
 
-if args.dataset != '':
-     dataset = args.dataset
-        
-if args.inception_cache_path != '':
-     inception_cache_path = args.inception_cache_path
+    if args.num_epochs != '':
+         num_epochs = args.num_epochs
 
-if args.log_path != '':
-     path = args.log_path
-        
-if args.init_state != '':
-     init_state = args.init_state
+    if args.batch_size != '':
+         batch_size = args.batch_size
 
-if args.trained_original_model_state != '':
-     trained_original_model_state = args.trained_original_model_state
+    if args.lr != '':
+         learning_rate = args.lr
 
-if args.init_with_old != '':
-     init_with_old = args.init_with_old == 'True'
-        
-if args.prune_encoder != '':
-     prune_encoder = args.prune_encoder == 'True'
-        
-if args.prune_decoder != '':
-     prune_decoder = args.prune_decoder == 'True'
- 
-        
-img_transform = transforms.Compose([
-            transforms.Resize(image_size),
-            transforms.ToTensor(),
-            transforms.Normalize((0.5,0.5,0.5), (0.5,0.5,0.5))
-        ])
+    if args.image_size != '':
+         image_size = args.image_size
 
-if 'cifar' in dataset:
-    dataset = CIFAR10(dataset, download=True, transform=img_transform)
-if 'mnist' in dataset:
-    dataset = MNIST(dataset, download=True, transform=img_transform)
+    if args.ndf != '':
+         ndf = args.ndf
 
-dataloader1 = DataLoader(dataset, batch_size=batch_size, shuffle=False)
-dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
+    if args.dataset != '':
+         dataset = args.dataset
 
-test_input, classes = next(iter(dataloader1)) 
-print(classes)
+    if args.inception_cache_path != '':
+         inception_cache_path = args.inception_cache_path
 
-fh = open(path + "/train.log", 'w')
-fh.write('Logging')
-fh.close()
-        
-model = autoencoder()
-#model.one_shot_prune(98, trained_original_model_state = trained_original_model_state)
-model.iterative_prune(init_state = init_state, 
-                    trained_original_model_state = trained_original_model_state, 
-                    number_of_iterations = 20, 
-                    percent = 20, 
-                    init_with_old = init_with_old,
-                    prune_encoder = prune_encoder,
-                    prune_decoder = prune_decoder)
-#model.train(prune = False, init_state = init_state, init_with_old = init_with_old)
+    if args.log_path != '':
+         path = args.log_path
+
+    if args.init_state != '':
+         init_state = args.init_state
+
+    if args.trained_original_model_state != '':
+         trained_original_model_state = args.trained_original_model_state
+
+    if args.init_with_old != '':
+         init_with_old = args.init_with_old == 'True'
+
+    if args.prune_encoder != '':
+         prune_encoder = args.prune_encoder == 'True'
+
+    if args.prune_decoder != '':
+         prune_decoder = args.prune_decoder == 'True'
+
+
+    img_transform = transforms.Compose([
+                transforms.Resize(image_size),
+                transforms.RandomCrop(image_size),
+                transforms.ToTensor(),
+                transforms.Normalize((0.5,), (0.5,))
+            ])
+
+    if 'cifar' in dataset:
+        dataset = CIFAR10(dataset, download=True, transform=img_transform)
+    if 'mnist' in dataset:
+        dataset = MNIST(dataset, download=True, transform=img_transform)
+    if 'celeba' in dataset:
+        dataset = datasets.ImageFolder(dataset, transform=img_transform)
+
+    dataloader1 = DataLoader(dataset, batch_size=batch_size, shuffle=False)
+    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=4, pin_memory=True)
+
+    test_input, classes = next(iter(dataloader1)) 
+    test_input = test_input.view(batch_size, -1)
+    save_image(test_input * 0.5 + 0.5, path + '/test_input.png')
+
+    fh = open(path + "/train.log", 'w')
+    fh.write('Logging')
+    fh.close()
+
+    model = autoencoder()
+
+    #model.one_shot_prune(98, trained_original_model_state = trained_original_model_state)
+    model.iterative_prune(init_state = init_state, 
+                        trained_original_model_state = trained_original_model_state, 
+                        number_of_iterations = 20, 
+                        percent = 20, 
+                        init_with_old = init_with_old,
+                        prune_encoder = prune_encoder,
+                        prune_decoder = prune_decoder)
+    #model.train(prune = False, init_state = init_state, init_with_old = init_with_old)
 
